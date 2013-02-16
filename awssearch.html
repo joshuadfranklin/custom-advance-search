@@ -1,187 +1,235 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
-    <title>Custom aws.amazon.com Search Form</title>
-    <link rel="schema.dc" 
-     href="http://purl.org/metadata/dublin_core_elements" />
-    <meta name="DC.Creator" content="Joshua Daniel Franklin" />
-    <meta name="DC.Rights"
-     content="http://creativecommons.org/licenses/by/2.0/" />
-    <!-- See http://cygwin.com/ml/cygwin/2005-03/msg00763.html -->
-<style type="text/css">
-div.lists {
-  border-style: solid;
-    border-width: 1px;
-      border-color: black;
-   width : 100%;
-   background-color : #eeeeee; 
-   }
-</style>
-<script language="JavaScript">    
-
-var ln = new Array(
-"taroon-list",
-"taroon-beta-list",
-"nahant-list",
-"nahant-beta-list",
-"redhat-sysadmin-list",
-"redhat-list",
-"redhat-install-list",
-"enterprise-watch-list"
-);
-
-function getJulianDate() {
-/*
-Julian dates are the number of days since 4713 BCE January 1; the 
-easiest way to get them in JavaScript is by comparison with the 
-Unix Epoch (1970 Jan 1 UTC), since that day's Julian date is a known 
-fixed number
-*/
-   var i,j,k;
-   var now = new Date();
-   // get the date in milliseconds since '00:00:00 1970-01-01 UTC' 
-   i = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate(),0,0,0);
-   // convert milliseconds to days
-   j = i / (24*60*60*1000);
-   // 2440588 is Julian Date of '00:00:00 1970-01-01 UTC'
-   k = Math.round(j + 2440588);
-   // document.write('<h1>' + k + '</h1>');
-   return k;
-}
-
-function generateDates() {
-/*
-Create a select box in a form
-*/
-   // sometimes Google mistakenly indexes documents in the future
-   var thefuture = 3000000;
-   // today's date in Julian format
-   var jdate = getJulianDate();
-   var lastweek = jdate - 7;
-   var lastmonth = jdate - 31;
-   var lastyear = jdate - 366;
-   var a = '<option value="daterange:';
-   var b = '-' + thefuture + '">within the past ';
-
-   document.write('for <abbr title="Please note the indexed date can be different than page creation date">pages indexed by Google</abbr> ');
-   document.write('<select name="q">');
-   document.write('<option value="">Any time</option>\n'); 
-   document.write(a + lastweek + b + 'week</option>\n'); 
-   document.write(a + lastmonth + b + 'month</option>\n');
-   document.write(a + lastyear + b + 'year</option>\n'); 
-   document.write('</select>');
-}
-
-<!--
-function showMailingLists() {
-   var a = ' <a href="http://www.redhat.com/archives/';
-   var s = '<li>[<a href="https://www.redhat.com/mailman/listinfo/';
-   var i;
-   var now = new Date();
-   var thisMonth = now.getUTCMonth() + 1;
-   var month_names = new Array(
-       "January", "February", "March", "April", "May", "June", 
-       "July", "August", "September", "October", "November", "December");
-
-   thisMonth = now.getUTCFullYear() + '-' + month_names[thisMonth-1];
-
-   document.write('<div class="lists"><ul>');
-   document.write('<p>The current month\'s archives for some ');
-   document.write('<a href="http://www.redhat.com/mailman/listinfo">Red Hat');
-   document.write(' Mailing Lists</a>:</p>');
-   for (i=0; i < ln.length; i++) {
-     document.write(s+ln[i]+'">s]</a>');
-     document.write(a+ln[i]+'/'+thisMonth+'/thread.html">'+ln[i]+'</a>');
-     document.write('</li>');
-   }
-   document.write('<p>The latest ');
-   document.write('<a href="http://lists.centos.org/pipermail/centos/' + thisMonth + '/thread.html"');
-   document.write('>CentOS list archives</a> may also interest you.</p>');
-   document.write('</ul></div>');
-}
--->
-</script>
-     </head>
-<body>
-    <div id="header">
-    <h1>Custom aws.amazon.com Search Page</h1> 
-    </div>
-    <div id="formbox">
-    <p> </p>
- <!-- Google Search -->
-<form name="s_form" method="GET" action="http://www.google.com/search">
-<a href="http://aws.amazon.com/"><img src="http://media.amazonwebservices.com/blog/aws_logo_web_194px_2.png" border="0" alt="AWS" align="absmiddle"></a> 
-<!-- The input -->
-<input type="text" name="as_q" size="51" maxlength="255" value=''>
-<input type="hidden" name="lr" value='lang_en'>
-<input type="hidden" name="as_sitesearch" value="aws.amazon.com">
-<input type="submit" name="b_submit" value='Google Search aws.amazon.com'>
-</div>
-<div id="limits">
-<p>Search 
-   <select name="q">
-   <option value="">The Whole Website</option>
-   <option value="inurl:forums.aws.amazon.com">Only the Forums</option>
-   <option value="-inurl:forums.aws.amazon.com">Everything but the Forums</option>
-   <option value="inurl:aws.amazon.com/articles/">Only Articles</option>
-   <option value="inurl:docs.aws.amazon.com">All Docs</option>
-<option value="inurl:docs.aws.amazon.com/AlexaTopSites/latest/">AlexaTopSites</option>
-<option value="inurl:docs.aws.amazon.com/AlexaWebInfoService/latest">Alexa Web Information Service</option>
-<option value="inurl:docs.aws.amazon.com/AutoScaling/latest/">AS AutoScaling</option>
-<option value="inurl:docs.aws.amazon.com/cli/latest/">awscli</option>
-<option value="inurl:docs.aws.amazon.com/AWSCloudFormation/latest/">CloudFormation</option>
-<option value="inurl:docs.aws.amazon.com/AmazonCloudFront/latest/">CloudFront</option>
-<option value="inurl:docs.aws.amazon.com/cloudsearch/latest/">CloudSearch</option>
-<option value="inurl:docs.aws.amazon.com/AmazonCloudWatch/latest/">CloudWatch</option>
-<option value="inurl:docs.aws.amazon.com/datapipeline/latest/">DataPipeline</option>
-<option value="inurl:docs.aws.amazon.com/AmazonDevPay/latest/">DevPay</option>
-<option value="inurl:docs.aws.amazon.com/DirectConnect/latest/">DirectConnect</option>
-<option value="inurl:docs.aws.amazon.com/amazondynamodb/latest/">DynamoDB</option>
-<option value="inurl:docs.aws.amazon.com/AmazonElastiCache/latest/">ElastiCache</option>
-<option value="inurl:docs.aws.amazon.com/AWSEC2/">EC2</option>
-<option value="inurl:docs.aws.amazon.com/elasticbeanstalk/latest/">ElasticBeanstalk</option>
-<option value="inurl:docs.aws.amazon.com/ElasticLoadBalancing/latest/">ELB ElasticLoadBalancing</option>
-<option value="inurl:docs.aws.amazon.com/ElasticMapReduce/latest/">EMR ElasticMapReduce</option>
-<option value="inurl:docs.aws.amazon.com/elastictranscoder/latest/">ElasticTranscoder</option>
-<option value="inurl:docs.aws.amazon.com/AmazonFPS/latest/">FPS</option>
-<option value="inurl:docs.aws.amazon.com/amazonglacier/latest/">Glacier</option>
-<option value="inurl:docs.aws.amazon.com/IAM/latest/">IAM</option>
-<option value="inurl:docs.aws.amazon.com/AWSImportExport/latest/">ImportExport</option>
-<option value="inurl:docs.aws.amazon.com/AWSMechTurk/latest/">MechTurk</option>
-<option value="inurl:docs.aws.amazon.com/AmazonRDS/latest/">RDS</option>
-<option value="inurl:docs.aws.amazon.com/redshift/latest/">Redshift</option>
-<option value="inurl:docs.aws.amazon.com/Route53/latest/">Route53</option>
-<option value="inurl:docs.aws.amazon.com/AmazonS3/latest/">S3</option>
-<option value="inurl:docs.aws.amazon.com/ses/latest/">SQS</option>
-<option value="inurl:docs.aws.amazon.com/AmazonSimpleDB/latest/">SimpleDB</option>
-<option value="inurl:docs.aws.amazon.com/sns/latest/">SNS</option>
-<option value="inurl:docs.aws.amazon.com/AWSSimpleQueueService/latest/">SQS</option>
-<option value="inurl:docs.aws.amazon.com/storagegateway/latest/">StorageGateway</option>
-<option value="inurl:docs.aws.amazon.com/amazonswf/latest/">SWF</option>
-<option value="inurl:docs.aws.amazon.com/AmazonVPC/latest/">VPC</option>
-<!--
--->
-   </select>
-<script language="JavaScript">
-generateDates();
-</script>
-</form>
-</div>
-<!--
-<script language="JavaScript">
-showMailingLists();
-document.s_form.as_q.focus();
-</script>
--->
-<div id="footer">
-<p>
-Don't forget to search the Internet as well! This will catch issues at <a href="https://github.com/aws/">github.com/aws</a>, the multitude of additional 3rd party guides, and blogs from <a href="http://aws.typepad.com/aws/2013/02/amazon-redshift-now-broadly-available.html">Jeff Barr</a>, <a href="http://www.allthingsdistributed.com/">Werner Vogels</a>, and <a href="http://perspectives.mvdirona.com/">James Hamilton</a> for example.
-<p>
-DISCLAIMER: This search form is not maintained by or affiliated with Google.
-</p>
-</div>
-</body>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+      <title>Custom Search for aws.amazon.com</title>
+      <link rel="schema.dc" href="http://purl.org/metadata/dublin_core_elements" />
+      <meta name="DC.Creator" content="Joshua Daniel Franklin" />
+      <meta name="DC.Rights" content="http://creativecommons.org/licenses/by/2.0/" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="description" content="" />
+      <meta name="author" content="" />
+      <link href="static/bootstrap/css/bootstrap.css" rel="stylesheet" />
+      </link>
+      <!-- See http://cygwin.com/ml/cygwin/2005-03/msg00763.html -->
+      <style type="text/css">
+         body {
+         padding-top: 20px;
+         padding-bottom: 40px;
+         }
+         /* Custom container */
+         .container-narrow {
+         margin: 0 auto;
+         max-width: 700px;
+         }
+         .container-narrow > hr {
+         margin: 30px 0;
+         }
+         /* Main marketing message and sign up button */
+         .jumbotron {
+         margin: 60px 0;
+         text-align: center;
+         }
+         .jumbotron h1 {
+         font-size: 72px;
+         line-height: 1;
+         }
+         .jumbotron .btn {
+         font-size: 21px;
+         padding: 14px 24px;
+         }
+         /* Supporting marketing content */
+         .marketing {
+         margin: 60px 0;
+         }
+         .marketing p + h4 {
+         margin-top: 28px;
+         }
+      </style>
+      <link href="static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
+      </link>
+      <script language="JavaScript">    
+         var ln = new Array(
+         "taroon-list",
+         "taroon-beta-list",
+         "nahant-list",
+         "nahant-beta-list",
+         "redhat-sysadmin-list",
+         "redhat-list",
+         "redhat-install-list",
+         "enterprise-watch-list"
+         );
+         
+         function getJulianDate() {
+         /*
+         Julian dates are the number of days since 4713 BCE January 1; the 
+         easiest way to get them in JavaScript is by comparison with the 
+         Unix Epoch (1970 Jan 1 UTC), since that day's Julian date is a known 
+         fixed number
+         */
+            var i,j,k;
+            var now = new Date();
+            // get the date in milliseconds since '00:00:00 1970-01-01 UTC' 
+            i = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate(),0,0,0);
+            // convert milliseconds to days
+            j = i / (24*60*60*1000);
+            // 2440588 is Julian Date of '00:00:00 1970-01-01 UTC'
+            k = Math.round(j + 2440588);
+            return k;
+         }
+         
+         function generateDates() {
+         /*
+         Create a select box in a form
+         */
+            // sometimes Google mistakenly indexes documents in the future
+            var thefuture = 3000000;
+            // today's date in Julian format
+            var jdate = getJulianDate();
+            var lastweek = jdate - 7;
+            var lastmonth = jdate - 31;
+            var lastyear = jdate - 366;
+            var a = '<option value="daterange:';
+            var b = '-' + thefuture + '">within the past ';
+         
+            document.write('<select name="q">');
+            document.write('<option value="">Any time</option>\n'); 
+            document.write(a + lastweek + b + 'week</option>\n'); 
+            document.write(a + lastmonth + b + 'month</option>\n');
+            document.write(a + lastyear + b + 'year</option>\n'); 
+            document.write('</select>');
+         }
+         
+         <!--
+            function showMailingLists() {
+               var a = ' <a href="http://www.redhat.com/archives/';
+               var s = '<li>[<a href="https://www.redhat.com/mailman/listinfo/';
+               var i;
+               var now = new Date();
+               var thisMonth = now.getUTCMonth() + 1;
+               var month_names = new Array(
+                   "January", "February", "March", "April", "May", "June", 
+                   "July", "August", "September", "October", "November", "December");
+            
+               thisMonth = now.getUTCFullYear() + '-' + month_names[thisMonth-1];
+            
+               document.write('<div class="lists"><ul>');
+               document.write('<p>The current month\'s archives for some ');
+               document.write('<a href="http://www.redhat.com/mailman/listinfo">Red Hat');
+               document.write(' Mailing Lists</a>:</p>');
+               for (i=0; i < ln.length; i++) {
+                 document.write(s+ln[i]+'">s]</a>');
+                 document.write(a+ln[i]+'/'+thisMonth+'/thread.html">'+ln[i]+'</a>');
+                 document.write('</li>');
+               }
+               document.write('<p>The latest ');
+               document.write('<a href="http://lists.centos.org/pipermail/centos/' + thisMonth + '/thread.html"');
+               document.write('>CentOS list archives</a> may also interest you.</p>');
+               document.write('</ul></div>');
+            }
+            -->
+      </script>
+   </head>
+   <body>
+      <div class="container-narrow">
+         <div class="masthead">
+            <ul class="nav pull-right">
+               <li><a href="http://aws.amazon.com/"><img src="http://media.amazonwebservices.com/blog/aws_logo_web_194px_2.png" border="0" alt="AWS" width="75px" /></a></li>
+            </ul>
+            <h3 class="muted">Custom Search for aws.amazon.com</h3>
+         </div>
+         <hr />
+         <div class="row-fluid marketing">
+            <div class="span6">
+               <p>
+                  <!-- Google Search -->
+               <form name="s_form" method="GET" action="http://www.google.com/search">
+                  <input type="hidden" name="lr" value="lang_en" />
+                  <input type="hidden" name="as_sitesearch" value="aws.amazon.com" />
+                  <div class="control-group">
+                     <label class="control-label" for="as_q">Search For</label>
+                     <div class="controls">
+                        <input type="text" name="as_q" size="51" maxlength="255" /></input>
+                     </div>
+                  </div>
+                  <div class="control-group">
+                     <label class="control-label" for="q">In</label>
+                     <div class="controls">
+                        <select name="q">
+                           <option value="">The Whole Website</option>
+                           <option value="inurl:forums.aws.amazon.com">Only the Forums</option>
+                           <option value="-inurl:forums.aws.amazon.com">Everything but the Forums</option>
+                           <option value="inurl:aws.amazon.com/articles/">Only Articles</option>
+                           <option value="inurl:docs.aws.amazon.com">All Docs</option>
+                           <option value="inurl:docs.aws.amazon.com/AlexaTopSites/latest/">AlexaTopSites</option>
+                           <option value="inurl:docs.aws.amazon.com/AlexaWebInfoService/latest">Alexa Web Information Service</option>
+                           <option value="inurl:docs.aws.amazon.com/AutoScaling/latest/">AS AutoScaling</option>
+                           <option value="inurl:docs.aws.amazon.com/cli/latest/">awscli</option>
+                           <option value="inurl:docs.aws.amazon.com/AWSCloudFormation/latest/">CloudFormation</option>
+                           <option value="inurl:docs.aws.amazon.com/AmazonCloudFront/latest/">CloudFront</option>
+                           <option value="inurl:docs.aws.amazon.com/cloudsearch/latest/">CloudSearch</option>
+                           <option value="inurl:docs.aws.amazon.com/AmazonCloudWatch/latest/">CloudWatch</option>
+                           <option value="inurl:docs.aws.amazon.com/datapipeline/latest/">DataPipeline</option>
+                           <option value="inurl:docs.aws.amazon.com/AmazonDevPay/latest/">DevPay</option>
+                           <option value="inurl:docs.aws.amazon.com/DirectConnect/latest/">DirectConnect</option>
+                           <option value="inurl:docs.aws.amazon.com/amazondynamodb/latest/">DynamoDB</option>
+                           <option value="inurl:docs.aws.amazon.com/AmazonElastiCache/latest/">ElastiCache</option>
+                           <option value="inurl:docs.aws.amazon.com/AWSEC2/">EC2</option>
+                           <option value="inurl:docs.aws.amazon.com/elasticbeanstalk/latest/">ElasticBeanstalk</option>
+                           <option value="inurl:docs.aws.amazon.com/ElasticLoadBalancing/latest/">ELB ElasticLoadBalancing</option>
+                           <option value="inurl:docs.aws.amazon.com/ElasticMapReduce/latest/">EMR ElasticMapReduce</option>
+                           <option value="inurl:docs.aws.amazon.com/elastictranscoder/latest/">ElasticTranscoder</option>
+                           <option value="inurl:docs.aws.amazon.com/AmazonFPS/latest/">FPS</option>
+                           <option value="inurl:docs.aws.amazon.com/amazonglacier/latest/">Glacier</option>
+                           <option value="inurl:docs.aws.amazon.com/IAM/latest/">IAM</option>
+                           <option value="inurl:docs.aws.amazon.com/AWSImportExport/latest/">ImportExport</option>
+                           <option value="inurl:docs.aws.amazon.com/AWSMechTurk/latest/">MechTurk</option>
+                           <option value="inurl:docs.aws.amazon.com/AmazonRDS/latest/">RDS</option>
+                           <option value="inurl:docs.aws.amazon.com/redshift/latest/">Redshift</option>
+                           <option value="inurl:docs.aws.amazon.com/Route53/latest/">Route53</option>
+                           <option value="inurl:docs.aws.amazon.com/AmazonS3/latest/">S3</option>
+                           <option value="inurl:docs.aws.amazon.com/ses/latest/">SQS</option>
+                           <option value="inurl:docs.aws.amazon.com/AmazonSimpleDB/latest/">SimpleDB</option>
+                           <option value="inurl:docs.aws.amazon.com/sns/latest/">SNS</option>
+                           <option value="inurl:docs.aws.amazon.com/AWSSimpleQueueService/latest/">SQS</option>
+                           <option value="inurl:docs.aws.amazon.com/storagegateway/latest/">StorageGateway</option>
+                           <option value="inurl:docs.aws.amazon.com/amazonswf/latest/">SWF</option>
+                           <option value="inurl:docs.aws.amazon.com/AmazonVPC/latest/">VPC</option>
+                           <!--
+                              -->
+                        </select>
+                     </div>
+                  </div>
+                  <div class="control-group">
+                     <label class="control-label" for="q"><abbr title="Please note the indexed date can be different than page creation date">Indexed When</abbr></label>
+                     <div class="controls">
+                        <script language="JavaScript">
+                           generateDates();
+                        </script>
+                     </div>
+                  </div>
+                  <button class="btn btn-large btn-success" type="submit">Search</button>
+               </form>
+               </p>
+            </div>
+            <div class="span6">
+               <h4>Customer Search</h4>
+               <p>Don't forget to search the Internet as well! This will catch issues at <a href="https://github.com/aws/">github.com/aws</a>, the multitude of additional 3rd party guides, and blogs from <a href="http://aws.typepad.com/aws/2013/02/amazon-redshift-now-broadly-available.html">Jeff Barr</a>, <a href="http://www.allthingsdistributed.com/">Werner Vogels</a>, and <a href="http://perspectives.mvdirona.com/">James Hamilton</a> for example.</p>
+            </div>
+         </div>
+         <hr />
+		<!--
+		<script language="JavaScript">
+		showMailingLists();
+		document.s_form.as_q.focus();
+		</script>
+		-->
+         <div class="footer">
+            <p>This search form is neither maintained by, nor affiliated with, Google.</p>
+         </div>
+         </form>
+      </div>
+   </body>
 </html>
